@@ -1,0 +1,24 @@
+[remote "diaspora"]
+    url = git@github.com:diaspora/diaspora.git
+    fetch = +refs/heads/*:refs/remotes/diaspora/*
+[remote "github"]
+    url = git@github.com:huangyingw/diaspora.git
+    fetch = +refs/heads/*:refs/remotes/github/*
+[push]
+    remote = github
+[gsync]
+    remote = diaspora
+    branch = master
+[merge]
+    allow = true
+[branch "dev"]
+    remote = github
+    merge = refs/heads/dev
+[branch "master"]
+    remote = diaspora
+    merge = refs/heads/master
+[commit]
+    message = n
+[vrun]
+    silent = false
+    async = false
