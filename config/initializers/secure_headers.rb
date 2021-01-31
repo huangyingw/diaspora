@@ -16,8 +16,9 @@ SecureHeaders::Configuration.default do |config|
     img_src:         %w['self' data: blob: *],
     media_src:       %w[https:],
     script_src:      %w['self' blob: 'unsafe-eval' platform.twitter.com cdn.syndication.twimg.com widgets.flickr.com
-                        embedr.flickr.com platform.instagram.com 'unsafe-inline'],
-    style_src:       %w['self' 'unsafe-inline' platform.twitter.com *.twimg.com]
+                        embedr.flickr.com www.instagram.com 'unsafe-inline'],
+    style_src:       %w['self' 'unsafe-inline' platform.twitter.com *.twimg.com],
+    manifest_src:    %w['self']
   }
   # rubocop:enable Lint/PercentStringArray
 
