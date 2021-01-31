@@ -517,16 +517,13 @@ describe("app.views.Publisher", function() {
     beforeEach(function() {
       jQuery.fx.off = true;
       setFixtures(
-        "<div id=\"publisher\">" +
-        "  <div class=\"content_creation\"><form>" +
-        "    <div id=\"publisher-textarea-wrapper\">" +
-        "      <div id=\"photodropzone_container\">" +
-        "        <ul id=\"photodropzone\"></ul>" +
-        "      </div>" +
-        "    </div>" +
-        "    <input type=\"submit\" />" +
-        "  </form></div>" +
-        "</div>"
+        '<div id="publisher">'+
+        '  <div class="content_creation"><form>'+
+        '    <div id="publisher-textarea-wrapper"></div>'+
+        '    <div id="photodropzone"></div>'+
+        '    <input type="submit" />'+
+        '  </form></div>'+
+        '</div>'
       );
     });
 
@@ -542,77 +539,56 @@ describe("app.views.Publisher", function() {
         this.view = new app.views.Publisher();
 
         // replace the uploader plugin with a dummy object
-        var uploadView = this.view.viewUploader;
+        var upload_view = this.view.viewUploader;
         this.uploader = {
-          onProgress: _.bind(uploadView.progressHandler, uploadView),
-          onUploadStarted: _.bind(uploadView.uploadStartedHandler, uploadView),
-          onUploadCompleted: _.bind(uploadView.uploadCompleteHandler, uploadView)
+          onProgress: _.bind(upload_view.progressHandler, upload_view),
+          onSubmit:   _.bind(upload_view.submitHandler, upload_view),
+          onComplete: _.bind(upload_view.uploadCompleteHandler, upload_view)
         };
-        uploadView.uploader = this.uploader;
+        upload_view.uploader = this.uploader;
       });
 
-      context("progress", function() {
-        beforeEach(function() {
-          this.view.photozoneEl.append(
-            "<li id=\"upload-0\" class=\"publisher_photo loading\" style=\"position:relative;\">" +
-            "  <div class=\"progress\">" +
-            "    <div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\"></div>" +
-            "  </div>" +
-            "  <div class=\"spinner\"></div>" +
-            "</li>");
-          this.view.photozoneEl.append(
-            "<li id=\"upload-1\" class=\"publisher_photo loading\" style=\"position:relative;\">" +
-            "  <div class=\"progress\">" +
-            "    <div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\"></div>" +
-            "  </div>" +
-            "  <div class=\"spinner\"></div>" +
-            "</li>");
-        });
+      context('progress', function() {
+        it('shows progress in percent', function() {
+          this.uploader.onProgress(null, 'test.jpg', 20, 100);
 
-        it("shows progress in percent", function() {
-          this.uploader.onProgress(0, "test.jpg", 20);
-          this.uploader.onProgress(1, "test2.jpg", 25);
-
-          var dropzone = $("#photodropzone");
-          expect(dropzone.find("li.loading#upload-0 .progress-bar").attr("style")).toBe("width: 20%;");
-          expect(dropzone.find("li.loading#upload-1 .progress-bar").attr("style")).toBe("width: 25%;");
+          var info = this.view.viewUploader.info;
+          expect(info.text()).toContain('test.jpg');
+          expect(info.text()).toContain('20%');
         });
       });
 
-      context("submitting", function() {
+      context('submitting', function() {
         beforeEach(function() {
-          this.uploader.onUploadStarted(null, "test.jpg");
+          this.uploader.onSubmit(null, 'test.jpg');
         });
 
-        it("adds a placeholder", function() {
+        it('adds a placeholder', function() {
           expect(this.view.wrapperEl.attr("class")).toContain("with_attachments");
           expect(this.view.photozoneEl.find("li").length).toBe(1);
         });
 
-        it("disables the publisher buttons", function() {
+        it('disables the publisher buttons', function() {
           expect(this.view.submitEl.prop("disabled")).toBeTruthy();
         });
       });
 
       context('successful completion', function() {
         beforeEach(function() {
-          $("#photodropzone").html("<li id='upload-0' class='publisher_photo loading'></li>");
+          $('#photodropzone').html('<li class="publisher_photo loading"><img src="" /></li>');
 
-          /* eslint-disable camelcase */
-          this.uploader.onUploadCompleted(0, "test.jpg", {
+          this.uploader.onComplete(null, 'test.jpg', {
             data: { photo: {
               id: '987',
-              unprocessed_image: {
-                scaled_full: {url: "/uploads/images/scaled_full_test.jpg"},
-                thumb_large: {url: "/uploads/images/thumb_large_test.jpg"},
-                thumb_medium: {url: "/uploads/images/thumb_medium_test.jpg"},
-                thumb_small: {url: "/uploads/images/thumb_small_test.jpg"},
-                url: "/uploads/images/test.jpg"
-              }
+              unprocessed_image: { url: 'test.jpg' }
             }},
             success: true });
         });
-        /* eslint-enable camelcase */
+
+        it('shows it in text form', function() {
+          var info = this.view.viewUploader.info;
+          expect(info.text()).toBe(Diaspora.I18n.t('photo_uploader.completed', {file: 'test.jpg'}));
+        });
 
         it('adds a hidden input to the publisher', function() {
           var input = this.view.$('input[type="hidden"][value="987"][name="photos[]"]');
@@ -623,11 +599,9 @@ describe("app.views.Publisher", function() {
           var li  = this.view.photozoneEl.find("li");
           var img = li.find('img');
 
-          expect(li).not.toHaveClass("loading");
-          expect(img.attr("src")).toBe("/uploads/images/thumb_medium_test.jpg");
-          expect(img.attr("data-small")).toBe("/uploads/images/thumb_small_test.jpg");
-          expect(img.attr("data-scaled")).toBe("/uploads/images/scaled_full_test.jpg");
-          expect(img.attr("data-id")).toBe("987");
+          expect(li.attr('class')).not.toContain('loading');
+          expect(img.attr('src')).toBe('test.jpg');
+          expect(img.attr('data-id')).toBe('987');
         });
 
         it('re-enables the buttons', function() {
@@ -637,25 +611,19 @@ describe("app.views.Publisher", function() {
 
       context('unsuccessful completion', function() {
         beforeEach(function() {
-          $("#photodropzone").append("<li id='upload-0' class='publisher_photo loading'></li>");
+          $('#photodropzone').html('<li class="publisher_photo loading"><img src="" /></li>');
 
-          /* eslint-disable camelcase */
-          this.uploader.onUploadCompleted(0, "test.jpg", {
+          this.uploader.onComplete(null, 'test.jpg', {
             data: { photo: {
               id: '987',
-              unprocessed_image: {
-                thumb_small: {url: "test.jpg"},
-                thumb_medium: {url: "test.jpg"},
-                thumb_large: {url: "test.jpg"},
-                scaled_full: {url: "test.jpg"}
-              }
+              unprocessed_image: { url: 'test.jpg' }
             }},
             success: false });
         });
-        /* eslint-enable camelcase */
+
         it('shows error message', function() {
-          expect($("#photodropzone li").length).toEqual(0);
-          expect($("#upload_error").text()).toBe(Diaspora.I18n.t("photo_uploader.error", {file: "test.jpg"}));
+          var info = this.view.viewUploader.info;
+          expect(info.text()).toBe(Diaspora.I18n.t('photo_uploader.error', {file: 'test.jpg'}));
         });
       });
     });
