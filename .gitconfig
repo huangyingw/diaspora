@@ -22,3 +22,9 @@
 [vrun]
     silent = false
     async = false
+[gdif]
+    ignore = ./.gitmodules
+    ignore = ./Dockerfile
+    ignore = ./diaspora-docker
+    ignore = ./docker-compose.yml
+    ignore = ./test.sh
