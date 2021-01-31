@@ -21,6 +21,7 @@ class Profile < ApplicationRecord
   validates :first_name, :length => { :maximum => 32 }
   validates :last_name, :length => { :maximum => 32 }
   validates :location, :length => { :maximum =>255 }
+  validates :gender, length: {maximum: 255}
 
   validates_format_of :first_name, :with => /\A[^;]+\z/, :allow_blank => true
   validates_format_of :last_name, :with => /\A[^;]+\z/, :allow_blank => true
@@ -157,8 +158,9 @@ class Profile < ApplicationRecord
   end
 
   private
+
   def clearable_fields
-    self.attributes.keys - ["id", "created_at", "updated_at", "person_id"]
+    attributes.keys - %w[id created_at updated_at person_id tag_list]
   end
 
   def build_image_url(url)

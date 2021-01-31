@@ -327,25 +327,25 @@ describe UsersController, :type => :controller do
   describe 'getting_started' do
     it 'does not fail miserably' do
       get :getting_started
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'does not fail miserably on mobile' do
       get :getting_started, format: :mobile
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     context "with inviter" do
-      [bob, eve].each do |inviter|
-        sharing = !alice.contact_for(inviter.person).nil?
+      it "preloads data using gon for the aspect memberships dropdown when sharing with the inviter" do
+        alice.invited_by = bob
+        get :getting_started
+        expect_gon_preloads_for_aspect_membership_dropdown(:inviter, true)
+      end
 
-        context sharing ? "when sharing" : "when don't share" do
-          it "preloads data using gon for the aspect memberships dropdown" do
-            alice.invited_by = inviter
-            get :getting_started
-            expect_gon_preloads_for_aspect_membership_dropdown(:inviter, sharing)
-          end
-        end
+      it "preloads data using gon for the aspect memberships dropdown when not sharing with the inviter" do
+        alice.invited_by = eve
+        get :getting_started
+        expect_gon_preloads_for_aspect_membership_dropdown(:inviter, false)
       end
     end
   end
