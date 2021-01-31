@@ -92,16 +92,9 @@ gem "entypo-rails", "3.0.0"
 
 # JavaScript
 
-<<<<<<< HEAD
-gem "sprockets-es6",     "0.9.2"
-gem "handlebars_assets", "0.23.2"
-gem "jquery-rails",      "4.3.1"
-gem "js-routes",         "1.4.3"
-=======
 gem "handlebars_assets", "0.23.8"
 gem "jquery-rails",      "4.3.5"
 gem "js-routes",         "1.4.9"
->>>>>>> master
 gem "js_image_paths",    "0.1.1"
 
 source "https://gems.diasporafoundation.org" do
@@ -120,9 +113,7 @@ source "https://gems.diasporafoundation.org" do
   gem "rails-assets-backbone",                            "1.3.3"
   gem "rails-assets-bootstrap-markdown",                  "2.10.0"
   gem "rails-assets-corejs-typeahead",                    "1.2.1"
-  gem "rails-assets-cropperjs",                           "1.3.4"
   gem "rails-assets-fine-uploader",                       "5.13.0"
-  gem "rails-assets-pica",                                "4.0.1"
 
   # jQuery plugins
 
@@ -155,7 +146,7 @@ gem "nokogiri",          "1.10.9"
 gem "open_graph_reader", "0.7.0" # also update User-Agent in features/support/webmock.rb
 gem "redcarpet",         "3.5.0"
 gem "ruby-oembed",       "0.12.0"
-gem "twitter-text",      "2.1.0"
+gem "twitter-text",      "1.14.7"
 
 # RTL support
 

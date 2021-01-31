@@ -1,23 +1,113 @@
-# 0.8.0.0
+# 0.7.14.0
 
 ## Refactor
-* Add bootstrapping for using ECMAScript 6 with automatic transpiling for compatibility [#7581](https://github.com/diaspora/diaspora/pull/7581)
-* Remove backporting of mention syntax [#7788](https://github.com/diaspora/diaspora/pull/7788)
-* Enable Content-Security-Policy header by default [#7781](https://github.com/diaspora/diaspora/pull/7781)
+* Update the suggested Ruby version to 2.6. If you run into trouble during the update and you followed our installation guides, run `rvm install 2.6`. [#7929](https://github.com/diaspora/diaspora/pull/7929)
 
 ## Bug fixes
-* Fix multiple photos upload progress bar [#7655](https://github.com/diaspora/diaspora/pull/7655)
+* Don't link to deleted users in admin user stats [#8063](https://github.com/diaspora/diaspora/pull/8063)
+* Properly validate a profile's gender field length instead of failing with a database error. [#8127](https://github.com/diaspora/diaspora/pull/8127)
 
 ## Features
-* Add client-side cropping of profile image uploads [#7581](https://github.com/diaspora/diaspora/pull/7581)
-* Add client-site rescaling of post images if they exceed the maximum possible size [#7734](https://github.com/diaspora/diaspora/pull/7734)
+
+# 0.7.13.0
+
+## Security
+* Fixes [USN-4274-1](https://usn.ubuntu.com/4274-1/), a potential Denial-of-Service vulnerability in Nokogiri. [#8108](https://github.com/diaspora/diaspora/pull/8108)
+
+## Refactor
+* Set better example values for unicorn stdout/stderr log settings [#8058](https://github.com/diaspora/diaspora/pull/8058)
+* Replace dependency on rails-assets.org with custom gems cache at gems.diasporafoundation.org [#8087](https://github.com/diaspora/diaspora/pull/8087)
+
+## Bug fixes
+* Fix error while trying to fetch some sites with invalid OpenGraph data [#8049](https://github.com/diaspora/diaspora/pull/8049)
+* Don't show sign up link on mobile when registrations are disabled [#8060](https://github.com/diaspora/diaspora/pull/8060)
+
+## Features
+* Add cronjob to cleanup pending photos which were never posted [#8041](https://github.com/diaspora/diaspora/pull/8041)
+
+# 0.7.12.0
+
+## Refactor
+* Harmonize markdown titles sizes [#8029](https://github.com/diaspora/diaspora/pull/8029)
+
+## Bug fixes
+* Improve handling of mixed case hostnames while fetching OpenGraph data [#8021](https://github.com/diaspora/diaspora/pull/8021)
+* Fix "remember me" with two factor authentication enabled [#8031](https://github.com/diaspora/diaspora/pull/8031)
+
+## Features
+* Add line mentioning diaspora\* on the splash page [#7966](https://github.com/diaspora/diaspora/pull/7966)
+* Improve communication about signing up on closed pods [#7896](https://github.com/diaspora/diaspora/pull/7896)
+
+# 0.7.11.0
+
+## Refactor
+* Enable paranoid mode for devise [#8003](https://github.com/diaspora/diaspora/pull/8003)
+* Refactor likes cucumber test [#8002](https://github.com/diaspora/diaspora/pull/8002)
+
+## Bug fixes
+* Fix old photos without remote url for export [#8012](https://github.com/diaspora/diaspora/pull/8012)
+
+## Features
+* Add a manifest.json file as a first step to make diaspora\* a Progressive Web App [#7998](https://github.com/diaspora/diaspora/pull/7998)
+* Allow `web+diaspora://` links to link to a profile with only the diaspora ID [#8000](https://github.com/diaspora/diaspora/pull/8000)
+* Support TOTP two factor authentication [#7751](https://github.com/diaspora/diaspora/pull/7751)
+
+# 0.7.10.0
+
+## Refactor
+* Replace dandelion.jpg with a public domain photo [#7976](https://github.com/diaspora/diaspora/pull/7976)
+
+## Bug fixes
+* Fix incorrect post sorting on tag streams and tag searches for tags containing the word "activity" [#7959](https://github.com/diaspora/diaspora/issues/7959)
+
+# 0.7.9.0
+
+## Refactor
+* Improve public stream performance and cleanup unused indexes [#7944](https://github.com/diaspora/diaspora/pull/7944)
+* Improve wording of "Toggle mobile" [#7926](https://github.com/diaspora/diaspora/pull/7926)
+
+## Bug fixes
+* Do not autofollow back a user you are ignoring [#7913](https://github.com/diaspora/diaspora/pull/7913)
+* Fix photos gallery when too many thumbnails are shown [#7943](https://github.com/diaspora/diaspora/pull/7943)
+* Fix extended profile visibility switch showing the wrong state [#7955](https://github.com/diaspora/diaspora/pull/7955)
+
+## Features
+* Support ignore users on mobile [#7884](https://github.com/diaspora/diaspora/pull/7884)
+
+# 0.7.8.0
+
+## Refactor
+* Make setting up a development environment 9001% easier by adding a Docker-based setup [#7870](https://github.com/diaspora/diaspora/pull/7870)
+* Improve `web+diaspora://` handler description [#7909](https://github.com/diaspora/diaspora/pull/7909)
+* Move comment timestamp next to author name [#7905](https://github.com/diaspora/diaspora/pull/7905)
+* Sharpen small and medium thumbnails [#7924](https://github.com/diaspora/diaspora/pull/7924)
+* Show full-res image in Desktop's full-screen image view [#7890](https://github.com/diaspora/diaspora/pull/7890)
+
+## Bug fixes
+* Ignore invalid URLs for camo [#7922](https://github.com/diaspora/diaspora/pull/7922)
+* Unliking a post did not update the participation icon without a reload [#7882](https://github.com/diaspora/diaspora/pull/7882)
+* Fix broken Instagram embedding [#7920](https://github.com/diaspora/diaspora/pull/7920)
+
+## Features
+* Add the ability to assign roles in the admin panel [#7868](https://github.com/diaspora/diaspora/pull/7868)
+* Improve memory usage with libjemalloc if available [#7919](https://github.com/diaspora/diaspora/pull/7919)
+
+# 0.7.7.1
+
+Fixes a potential cross-site scripting issue with maliciously crafted OpenGraph metadata on the mobile interface.
 
 # 0.7.7.0
 
 ## Refactor
+* Remove mention of deprecated `statistic.json` [#7867](https://github.com/diaspora/diaspora/pull/7867)
+* Add quotes in `database.yml.example` to fields that may contain special characters [#7875](https://github.com/diaspora/diaspora/pull/7875)
+* Removed broken, and thus deprecated, Facebook integration [#7874](https://github.com/diaspora/diaspora/pull/7874)
 
 ## Bug fixes
 * Add compatibility with macOS to `script/configure_bundler` [#7830](https://github.com/diaspora/diaspora/pull/7830)
+* Fix comment and like notifications on posts without text [#7857](https://github.com/diaspora/diaspora/pull/7857) [#7853](https://github.com/diaspora/diaspora/pull/7853)
+* Fix issue with some language fallbacks not working correctly [#7861](https://github.com/diaspora/diaspora/pull/7861)
+* Make sure URLs are encoded before sending them to camo [#7871](https://github.com/diaspora/diaspora/pull/7871)
 
 ## Features
 * Add `web+diaspora://` link handler [#7826](https://github.com/diaspora/diaspora/pull/7826)
