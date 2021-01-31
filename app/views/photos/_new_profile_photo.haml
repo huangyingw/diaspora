@@ -3,7 +3,6 @@
 -#   the COPYRIGHT file.
 
 .profile-photo-upload#profile_photo_upload
-  .crop-container
     = owner_image_tag(:thumb_large)
   .small-horizontal-spacer
   .clearfix
@@ -11,7 +10,7 @@
       #file-upload.btn.btn-primary
         =t('.upload')
 
-  .spinner.hidden#file-upload-spinner
+  = image_tag('mobile-spinner.gif', :class => 'hidden', :style => "z-index:-1", :id => 'file-upload-spinner')
 
   %p
     #fileInfo
