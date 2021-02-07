@@ -1,4 +1,4 @@
-FROM ruby:2.3
+FROM ruby:2.4
 # Using the ruby onbuild image is not currently possible because some gems dependencies
 # needs to be resoveld before `bundle install` starts (rugged uses cmake).
 
