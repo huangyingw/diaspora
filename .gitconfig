@@ -27,4 +27,5 @@
     ignore = ./Dockerfile
     ignore = ./diaspora-docker
     ignore = ./docker-compose.yml
+    ignore = ./readme
     ignore = ./test.sh
