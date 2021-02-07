@@ -1,4 +1,0 @@
-[submodule "diaspora-docker"]
-    path = diaspora-docker
-    url = git@github.com:huangyingw/diaspora-docker.git
-    branch = dev
