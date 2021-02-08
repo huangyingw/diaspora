@@ -26,6 +26,7 @@
     ignore = ./.gitmodules
     ignore = ./Dockerfile
     ignore = ./config/database.yml
+    ignore = ./config/diaspora.yml
     ignore = ./diaspora-docker
     ignore = ./docker-compose.yml
     ignore = ./readme
